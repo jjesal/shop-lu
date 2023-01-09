@@ -1,5 +1,7 @@
 export default {
   '/': 'login-page',
   '/about': 'about-page',
-  '/login': 'login-page'
+  '/home': 'home-page',
+  '/login': 'login-page',
+  '/register': 'register-page'
 }
