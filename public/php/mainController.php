@@ -3,14 +3,8 @@
 // header('Set-Cookie: TRACKID=xxxr; Path=/; SameSite=None; Secure');
 session_start();
 include("./cnx.php");
-include("./lProgramacion.php");
-include("./mProgramacion.php");
 include("./lPersonal.php");
 include("./mPersonal.php");
-include("./mReportes.php");
-include("./lReportes.php");
-include("./mConf.php");
-include("./lConf.php");
 include("./lLogin.php");
 include("./mLogin.php");
 
@@ -69,98 +63,12 @@ if ($serverResponse['connected'] === true) {
 
         break;
       }
-    case 'listarProgramacion': {
-        viewCalendar();
-        break;
-      }
-    case 'listarConf': {
-        listarConf();
-        $typeData = 1;
-        break;
-      }
-    case 'viewGeneralReport': {
-        viewGeneralReport();
-        break;
-      }
-    case 'horasPersonal': {
-        horasPersonal();
-        break;
-      }
-    case 'viewIndividualReport': {
-        viewIndividualReport();
-        break;
-      }
-    case 'insertarProgramacion': {
-        insertarProgramacion();
-        break;
-      }
-    case 'insertarMultiple': {
-        insertarMultiple();
-        break;
-      }
     case 'eliminarPersonal': {
         eliminarPersonal();
         break;
       }
-    case 'eliminarDepartamento': {
-        eliminarDepartamento();
-        break;
-      }
-    case 'eliminarCargo': {
-        eliminarCargo();
-        break;
-      }
-    case 'eliminarEspecialidad': {
-        eliminarEspecialidad();
-        break;
-      }
-    case 'eliminarServicio': {
-        eliminarServicio();
-        break;
-      }
-    case 'listarCargo': {
-        listarCargo();
-
-        break;
-      }
-    case 'listarTurno': {
-        listarTurno();
-        break;
-      }
-    case 'reporteVacaciones': {
-        reporteVacaciones();
-        break;
-      }
     case 'cerrarSesion': {
         cerrarSesion();
-        break;
-      }
-    case 'insertarCargo': {
-        insertarCargo();
-        break;
-      }
-    case 'insertarDepartamento': {
-        insertarDepartamento();
-        break;
-      }
-    case 'insertarEspecialidad': {
-        insertarEspecialidad();
-        break;
-      }
-    case 'insertarServicio': {
-        insertarServicio();
-        break;
-      }
-    case 'editarTurno': {
-        editarTurno();
-        break;
-      }
-    case 'editarCuenta': {
-        editarCuenta();
-        break;
-      }
-    case 'ultimaFecha': {
-        ultimaFecha();
         break;
       }
     default:

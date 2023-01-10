@@ -34,7 +34,7 @@
 
         <!-- Header Section Begin -->
         <header class="header">
-          <div class="container">
+          <div class="x-container">
             <div class="row">
               <div class="col-lg-3 col-md-3">
                 <div class="header__logo">
@@ -58,9 +58,9 @@
               <div class="col-lg-3 col-md-3">
                 <div class="header__nav__option">
                   <a href="#" class="search-switch"><img src="img/icon/search.png" alt=""></a>
-                  <a href="#"><img src="img/icon/heart.png" alt=""></a>
                   <a href="#"><img src="img/icon/cart.png" alt=""> <span>0</span></a>
                   <div class="price">S/. 0.00</div>
+                  <a href="#" @click="logout" class="logout-btn">Cerrar sesión</a>
                 </div>
               </div>
             </div>
@@ -460,11 +460,20 @@
 @import '../assets/css/slicknav.min.css';
 @import '../assets/css/style.css';
 
-a {
+.breadcrumb-option a {
   color: white;
 }
-header a{
+
+a:hover {
   color: black;
+}
+
+a {
+  color: black;
+}
+
+.logout-btn {
+  padding-left: 10px;
 }
 </style>
 <script>
@@ -473,6 +482,15 @@ import MainLayout from '../layouts/main-layout.vue'
 export default {
   components: {
     MainLayout
+  },
+  methods: {
+    logout() {
+      this.$root.getData('cerrarSesion')
+        .then(() => {
+          this.$root.navigate('login')
+        })
+        .catch(function () { })
+    }
   }
 }
 </script>
