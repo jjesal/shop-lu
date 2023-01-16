@@ -7,7 +7,12 @@ include("./lPersonal.php");
 include("./mPersonal.php");
 include("./lLogin.php");
 include("./mLogin.php");
-
+include("./lProducto.php");
+include("./mProducto.php");
+include("./lCategoria.php");
+include("./mCategoria.php");
+include("./lMarca.php");
+include("./mMarca.php");
 
 // $cookieParams = session_get_cookie_params();
 // $cookieParams['samesite'] = "none";
@@ -53,14 +58,24 @@ getAxiosData();
 isLoggedIn();
 if ($serverResponse['connected'] === true) {
   switch ($op) {
-    case 'listarPersonal': {
-        listarPersonal();
+    case 'insertarProducto': {
+        insertarProducto();
         $typeData = 1;
         break;
       }
-    case 'listarPersonalDiasLibres': {
-        listarPersonalDiasLibres();
-
+    case 'insertarCategoria': {
+        insertarCategoria();
+        $typeData = 1;
+        break;
+      }
+    case 'insertarMarca': {
+        insertarMarca();
+        $typeData = 1;
+        break;
+      }
+    case 'listarPersonal': {
+        listarPersonal();
+        $typeData = 1;
         break;
       }
     case 'eliminarPersonal': {
@@ -90,11 +105,11 @@ if ($serverResponse['connected'] === true) {
         isLoggedIn();
         break;
       }
-      case 'isLoggedIn2': {
+    case 'isLoggedIn2': {
         $_SESSION['user'] = 'hola';
         break;
       }
-      case 'isLoggedIn3': {
+    case 'isLoggedIn3': {
         // $_SESSION['user'] = 'hola';
         break;
       }
@@ -114,4 +129,7 @@ function getAxiosData()
 {
   global $axios_data;
   $axios_data = json_decode(file_get_contents("php://input"), true);
+  if (!isset($axios_data)) {
+    $axios_data = $_POST;
+  }
 }

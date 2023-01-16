@@ -25,6 +25,10 @@ export default {
   padding: 0;
 }
 
+.my-mg-auto-x{
+  margin: 0 auto;
+}
+
 * {
   box-sizing: border-box;
   font-family: 'Segoe UI Light', Tahoma, Geneva, Verdana, sans-serif;

@@ -21,7 +21,7 @@ const app = new Vue({
   render(h) {
     return h(this.ViewComponent)
   },
-  mounted(){
+  mounted() {
     this.isLogged();
   },
   methods: {
@@ -29,7 +29,7 @@ const app = new Vue({
       this.$root.loadingPetition = spinner;
       return new Promise((resolve, reject) => {
         fetch(document.pathdev + "/php/mainController.php?op=" + op, {
-          method:'GET',
+          method: 'GET',
           credentials: 'include'
           /* headers: {'Content-Type': 'application/json' }*/
         }).then(rs => rs.json()).then(response => {
@@ -42,18 +42,19 @@ const app = new Vue({
         });
       });
     },
-    postData(op, body, spinner = true) {
+    postData(op, body, typeData = 'json', spinner = true) {
       this.$root.loadingPetition = spinner;
-
       return new Promise((resolve, reject) => {
         fetch(document.pathdev + "/php/mainController.php?op=" + op, {
           method: 'POST',
-          headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-          },
+          ...(typeData === 'json' ? {
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+            }
+          } : {}),
           credentials: 'include',
-          body: JSON.stringify(body)
+          body: typeData === 'json' ? JSON.stringify(body) : body
         }).then(rs => rs.json()).then(response => {
           if (response.hasOwnProperty('connected') && !response.connected) {
             this.navigate('login');
@@ -73,10 +74,10 @@ const app = new Vue({
       this.$root.getData('isLoggedIn')
         .then((response) => {
           if (response.hasOwnProperty('connected') && response.connected) {
-            if (this.currentRoute==='/login' || this.currentRoute==='/') {
+            if (this.currentRoute === '/login' || this.currentRoute === '/') {
               this.navigate('home');
             }
-            this.$root.userLogged=true;
+            this.$root.userLogged = true;
           } else {
             this.navigate('login');
           }
