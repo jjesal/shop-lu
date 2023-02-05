@@ -14,16 +14,22 @@
             <div class="form-group">
               <label for="exampleFormControlSelect1">Categoría</label>
               <select name="categoria_id" class="form-control" id="exampleFormControlSelect1">
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
+                <option v-for="option in arrCategoria" :value="option.value">
+                  {{ option.text }}
+                </option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="exampleFormControlSelect1">Marca</label>
+              <select name="marca_id" class="form-control" id="exampleFormControlSelect1">
+                <option v-for="option in arrMarca" :value="option.value">
+                  {{ option.text }}
+                </option>
               </select>
             </div>
 
             <div class="form-group">
-              <label for="exampleFormControlFile1">Example file input</label>
+              <label for="exampleFormControlFile1">Imagen de producto</label>
               <input name="imagen" type="file" class="form-control-file" id="exampleFormControlFile1">
             </div>
 
@@ -63,11 +69,19 @@ export default {
       producto: {
         id: 'NULL',
         categoría: 1
-      }
+      },
+      arrCategoria: [],
+      arrMarca: []
     };
   },
   created: function () {
     console.log('mine ', 'created');
+    this.$root.getData('listarCategoria').then(arrCategoria=>{
+      this.arrCategoria=arrCategoria.map(categoria=>({value: categoria.id, text: categoria.nombre_categoria}))
+    });
+    this.$root.getData('listarMarca').then(arrMarca=>{
+      this.arrMarca = arrMarca.map(marca=>({value: marca.id, text: marca.nombre_marca}))
+    });
   },
   methods: {
     loadImage(event) {

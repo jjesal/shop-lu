@@ -58,6 +58,11 @@ getAxiosData();
 isLoggedIn();
 if ($serverResponse['connected'] === true) {
   switch ($op) {
+    case 'listarProducto': {
+        listarProducto();
+        $typeData = 1;
+        break;
+      }
     case 'insertarProducto': {
         insertarProducto();
         $typeData = 1;
@@ -73,8 +78,13 @@ if ($serverResponse['connected'] === true) {
         $typeData = 1;
         break;
       }
-    case 'listarPersonal': {
-        listarPersonal();
+      case 'listarCategoria': {
+        listarCategoria();
+        $typeData = 1;
+        break;
+      }
+    case 'listarMarca': {
+        listarMarca();
         $typeData = 1;
         break;
       }

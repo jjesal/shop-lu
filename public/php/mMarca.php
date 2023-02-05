@@ -31,7 +31,6 @@ class mMarca
 
   function select_msql($sql)
   {
-    echo $sql;
     $cnx = cnx();
     $rsql = mysqli_query($cnx, $sql);
     try {
