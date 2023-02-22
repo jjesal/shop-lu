@@ -23,7 +23,11 @@ class mProducto
   function listar()
   {
     $sql = "
-            select	* from producto
+            select	producto.*, categoria.nombre_categoria, marca.nombre_marca from producto
+            inner join categoria
+              on producto.categoria_id=categoria.id
+            inner join marca
+              on producto.marca_id=marca.id
           ";
     $rsql = $this->select_msql($sql);
     return $rsql;

@@ -11,16 +11,19 @@
 
         </form>
       </div>
+      <spinner-veil v-if="$root.loadingPetition" />
     </main-layout>
   </div>
 </template>
 
 <script>
 import MainLayout from '../layouts/main-layout.vue'
+import spinnerVeil from "../components/spinner-veil.vue"
 
 export default {
   components: {
-    MainLayout
+    MainLayout,
+    spinnerVeil
   },
   data: () => {
     return {

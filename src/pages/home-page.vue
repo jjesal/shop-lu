@@ -46,12 +46,11 @@
                   <ul>
                     <li class="active"><a v-on:click="view='list-products'" href="#">Inicio</a></li>
                     <li><a v-on:click="view='register-products'" href="#">Registrar productos</a></li>
-                    <li><a v-on:click="view='register-category'" href="#">Mantenimiento</a></li>
-                    <li><a href="#">Páginas</a>
+                    <!-- <li><a href="#">xx</a></li> -->
+                    <li><a href="#">Mantenimiento</a>
                       <ul class="dropdown">
-                        <li><a href="./shop-details.html">Shop Details</a></li>
-                        <li><a href="./shopping-cart.html">Shopping Cart</a></li>
-                        <li><a href="./checkout.html">Check Out</a></li>
+                        <li><a v-on:click="view='register-category'" href="#">Categorías</a></li>
+                        <li><a v-on:click="view='register-mark'" href="#">Marcas</a></li>
                       </ul>
                     </li>
                   </ul>
@@ -77,7 +76,7 @@
             <div class="row">
               <div class="col-lg-12">
                 <div class="breadcrumb__text">
-                  <h4>Sumaq Yawa</h4>
+                  <h4>Sumaq Yawar</h4>
                   <div class="breadcrumb__links">
                     <a href="./index.html">Inicio</a>
                     <span>Productos</span>
@@ -91,6 +90,7 @@
         <component :is="view"></component>
         <!-- <list-products></list-products> -->
       </div>
+      <spinner-veil v-if="$root.loadingPetition" />
     </main-layout>
   </div>
 </template>
@@ -125,13 +125,17 @@ import MainLayout from '../layouts/main-layout.vue'
 import listProducts from '../pages/list-products.vue'
 import registerProducts from '../pages/register-products.vue'
 import registerCategory from '../pages/register-category.vue'
+import registerMark from '../pages/register-mark.vue'
+import spinnerVeil from "../components/spinner-veil.vue"
 
 export default {
   components: {
     MainLayout,
     listProducts,
     registerProducts,
-    registerCategory
+    registerCategory,
+    registerMark,
+    spinnerVeil
   },
   data: () => {
     return {

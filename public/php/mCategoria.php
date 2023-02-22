@@ -23,7 +23,7 @@ class mCategoria
   function listar()
   {
     $sql = "
-            select * from categoria
+            select id, nombre_categoria nombre from categoria
           ";
     $rsql = $this->select_msql($sql);
     return $rsql;

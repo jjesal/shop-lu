@@ -23,7 +23,7 @@ class mMarca
   function listar()
   {
     $sql = "
-            select	* from marca
+            select	id, nombre_marca nombre from marca
           ";
     $rsql = $this->select_msql($sql);
     return $rsql;

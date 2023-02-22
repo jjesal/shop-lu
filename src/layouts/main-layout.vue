@@ -1,17 +1,11 @@
 <template>
   <div class="my-container">
-    <spinner-veil v-if="$root.loadingPetition" />
     <slot></slot>
   </div>
 </template>
 
 <script>
-import spinnerVeil from "../components/spinner-veil.vue"
-export default {
-  components: {
-    spinnerVeil
-  },
-}
+
 </script>
 
 <style>
@@ -25,7 +19,7 @@ export default {
   padding: 0;
 }
 
-.my-mg-auto-x{
+.my-mg-auto-x {
   margin: 0 auto;
 }
 
@@ -74,5 +68,10 @@ input {
 .my-link {
   color: var(--my-text-color);
   font-size: 1rem;
+}
+
+.envolve {
+  left: 0;
+  top: 0;
 }
 </style>

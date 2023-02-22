@@ -51,7 +51,7 @@
                   </div>
                   <div class="card">
                     <div class="card-heading">
-                      <a data-toggle="collapse" data-target="#collapseThree">Filter Price</a>
+                      <a data-toggle="collapse" data-target="#collapseThree">FILTRAR PRECIO</a>
                     </div>
                     <div id="collapseThree" class="collapse show" data-parent="#accordionExample">
                       <div class="card-body">
@@ -122,7 +122,7 @@
                     </ul>
                   </div>
                   <div class="product__item__text">
-                    <h6>{{ producto.nombre_producto }}</h6>
+                    <h6>{{ producto.nombre_producto }} - <i>{{ producto.nombre_marca }}</i></h6>
                     <a href="#" class="add-cart">+ Añadir al carrito</a>
 
                     <h5>S/. {{ producto.precio }}</h5>

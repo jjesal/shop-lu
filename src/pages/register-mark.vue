@@ -3,19 +3,18 @@
     <main-layout>
       <div class="background">
         <div class="main-form form-group my-mg-auto-x">
-          <label>Registro de Categorias</label>
-          <form id="category-form" @submit="registerCategory">
+          <label>Registro de Marcas</label>
+          <form id="mark-form" @submit="registerMark">
             <div class="form-group">
               <input name="id" value="NULL" hidden>
-              <label for="exampleFormControlInput1">Nombre de categoria</label>
-              <input required name="nombre_categoria" type="text" class="form-control" id="exampleFormControlInput1"
-                placeholder="Libros...">
+              <label for="exampleFormControlInput1">Nombre de marca</label>
+              <input name="nombre_marca" required type="text" class="form-control" id="exampleFormControlInput1"
+                placeholder="Faber Castell...">
             </div>
-
             <input class="my-btn" type="submit" value="Guardar">
           </form>
           <br><br>
-          <list-items :arrItems="arrCategoria" :arrHeadKey="arrHeadKey"></list-items>
+          <list-items :arrItems="arrMarca" :arrHeadKey="arrHeadKey"></list-items>
         </div>
       </div>
     </main-layout>
@@ -27,7 +26,7 @@ import MainLayout from '../layouts/main-layout.vue'
 import listItems from "../components/list-items.vue"
 
 export default {
-  name: 'register-category',
+  name: 'register-mark',
   components: {
     MainLayout,
     listItems
@@ -38,7 +37,7 @@ export default {
         id: 'NULL',
         categoría: 1
       },
-      arrCategoria: [],
+      arrMarca: [],
       arrHeadKey: [{ head: '#', key: 'id' }, { head: 'Nombre', key: 'nombre' }]
     };
   },
@@ -46,25 +45,26 @@ export default {
     this.getList();
   },
   methods: {
-    registerCategory(e) {
+    registerMark(e) {
       e.preventDefault();
-      const formData = new FormData(document.querySelector('#category-form'))
-      this.$root.postData('insertarCategoria', formData, 'form')
+      const formData = new FormData(document.querySelector('#mark-form'))
+      this.$root.postData('insertarMarca', formData, 'form')
         .then((rs) => {
           console.log('rs', rs);
-          document.querySelector('#category-form').reset();
+          document.querySelector('#mark-form').reset();
           this.getList();
         })
         .catch(function () { })
     },
     getList() {
-      this.$root.getData('listarCategoria').then(arrCategoria => {
-        this.arrCategoria = arrCategoria;
+      this.$root.getData('listarMarca').then(arrMarca => {
+        this.arrMarca = arrMarca;
       });
     },
     isLoggedIn(bool) {
       //si es true, es llamado por login
       // comprueba si ya existe la sesion en el servidor
+
       this.axios
         .post(
           document.pathdev + "/php/mainController.php?op=isLoggedIn",
