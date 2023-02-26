@@ -3,5 +3,6 @@ export default {
   '/home': 'home-page',
   '/login': 'login-page',
   '/register': 'register-page',
-  '/register-products': 'register-products'
+  '/register-products': 'register-products',
+  '/cart': 'cart-page'
 }

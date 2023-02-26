@@ -1291,7 +1291,6 @@ ol {
 
 .shop__sidebar__size label.active {
 	background: #111111;
-	color: #ffffff;
 	border-color: #111111;
 }
 
@@ -1680,7 +1679,7 @@ ol {
 
 .product__details__option__size label.active {
 	background: #111111;
-	color: #ffffff;
+	/* color: #ffffff; */
 	border-color: #111111;
 }
 

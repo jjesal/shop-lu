@@ -44,13 +44,18 @@
               <div class="col-lg-6 col-md-6">
                 <nav class="header__menu mobile-menu">
                   <ul>
-                    <li class="active"><a v-on:click="view='list-products'" href="#">Inicio</a></li>
-                    <li><a v-on:click="view='register-products'" href="#">Registrar productos</a></li>
-                    <!-- <li><a href="#">xx</a></li> -->
-                    <li><a href="#">Mantenimiento</a>
+                    <li class="active" @click="manageActive($event)"><a v-on:click="()=>{view.page = 'list-products'; view.title = 'Productos'}">Inicio</a>
+                    </li>
+                    <li @click="manageActive($event)"><a v-on:click="()=>{view.page = 'car-page'; view.title = 'Carrito'}">Carrito</a></li>
+                    <!-- <li><a >xx</a></li> -->
+                    <li id="dropmenu"><a>Mantenimiento</a>
                       <ul class="dropdown">
-                        <li><a v-on:click="view='register-category'" href="#">Categorías</a></li>
-                        <li><a v-on:click="view='register-mark'" href="#">Marcas</a></li>
+                        <li @click="manageActive($event, 'dropmenu')"><a v-on:click="()=>{view.page = 'register-category'; view.title = 'Categorías'}"
+                            href="#">Categorías</a></li>
+                        <li @click="manageActive($event, 'dropmenu')"><a v-on:click="()=>{view.page = 'register-mark'; view.title = 'Marcas'}"
+                            href="#">Marcas</a></li>
+                        <li @click="manageActive($event, 'dropmenu')"><a v-on:click="()=>{view.page = 'register-products'; view.title = 'Registrar producto'}"
+                            href="#">Registrar producto</a></li>
                       </ul>
                     </li>
                   </ul>
@@ -78,8 +83,8 @@
                 <div class="breadcrumb__text">
                   <h4>Sumaq Yawar</h4>
                   <div class="breadcrumb__links">
-                    <a href="./index.html">Inicio</a>
-                    <span>Productos</span>
+                    <!-- <a href="./index.html">Inicio</a> -->
+                    <span>> {{ view.title }}</span>
                   </div>
                 </div>
               </div>
@@ -87,7 +92,7 @@
           </div>
         </section>
         <!-- Breadcrumb Section End -->
-        <component :is="view"></component>
+        <component :is="view.page"></component>
         <!-- <list-products></list-products> -->
       </div>
       <spinner-veil v-if="$root.loadingPetition" />
@@ -95,7 +100,7 @@
   </div>
 </template>
 <style>
-@import '../assets/css/bootstrap.min.css';
+/* @import '../assets/css/bootstrap.min.css'; */
 @import '../assets/css/font-awesome.min.css';
 @import '../assets/css/elegant-icons.css';
 @import '../assets/css/magnific-popup.css';
@@ -103,6 +108,7 @@
 @import '../assets/css/owl.carousel.min.css';
 @import '../assets/css/slicknav.min.css';
 @import '../assets/css/style.css';
+@import 'bootstrap-icons/font/bootstrap-icons.css';
 
 .breadcrumb-option a {
   color: white;
@@ -119,6 +125,10 @@ a {
 .logout-btn {
   padding-left: 10px;
 }
+
+.x-container .row {
+  margin: auto;
+}
 </style>
 <script>
 import MainLayout from '../layouts/main-layout.vue'
@@ -126,7 +136,9 @@ import listProducts from '../pages/list-products.vue'
 import registerProducts from '../pages/register-products.vue'
 import registerCategory from '../pages/register-category.vue'
 import registerMark from '../pages/register-mark.vue'
+import carPage from '../pages/car-page.vue'
 import spinnerVeil from "../components/spinner-veil.vue"
+import swal from 'sweetalert2';
 
 export default {
   components: {
@@ -135,14 +147,33 @@ export default {
     registerProducts,
     registerCategory,
     registerMark,
-    spinnerVeil
+    carPage,
+    spinnerVeil,
+    swal
   },
   data: () => {
     return {
-      view: 'list-products'
+      view: {
+        page: 'list-products',
+        title: 'Productos'
+      }
     };
   },
+  created: function () {
+    console.log('mine holaaa');
+  },
   methods: {
+    manageActive(event, alternative) {
+      const arrMenu = document.querySelectorAll('.header__menu.mobile-menu>ul>li');
+      arrMenu.forEach(element => {
+        element.classList.remove('active');
+      });
+      if (!alternative) {
+        event.target.parentElement.classList.add('active');
+      } else {
+        document.querySelector(`#${alternative}`).classList.add('active');
+      }
+    },
     logout() {
       this.$root.getData('cerrarSesion')
         .then(() => {

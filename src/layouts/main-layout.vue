@@ -74,4 +74,12 @@ input {
   left: 0;
   top: 0;
 }
+
+.swal-button {
+  background-color: rgb(234, 53, 84);
+}
+
+.swal-button:not([disabled]):hover {
+  background-color: rgba(234, 53, 83, 0.524);
+}
 </style>

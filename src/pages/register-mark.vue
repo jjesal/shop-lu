@@ -98,7 +98,6 @@ export default {
   /* background-color: ; */
   /* color: rgb(234, 53, 84); */
   height: 100vh;
-  width: 100vw;
   margin: 0;
   /* display: grid; */
 }

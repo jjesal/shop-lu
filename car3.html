@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <button id="show-cart-btn"></button>
+  <div id="modal-cart" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2>Tu carrito de compras</h2>
+      <div id="cart-items"></div>
+      <div id="cart-summary">
+        <h3>Resumen de la compra</h3>
+        <p>Total:</p>
+        <button id="checkout-btn">Pagar</button>
+      </div>
+    </div>
+  </div>
+  <style>
+    /* Estilos para el modal */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.8);
+    }
+
+    /* Estilos para el contenido del modal */
+    .modal-content {
+      background-color: #fff;
+      margin: 15% auto;
+      padding: 20px;
+      border: 1px solid #888;
+      width: 80%;
+      max-width: 600px;
+    }
+
+    /* Estilos para el botón de cerrar */
+    .close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+      color: #000;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    /* Estilos para la lista de productos */
+    #cart-items {
+      margin-top: 20px;
+    }
+
+    .cart-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .cart-item img {
+      height: 50px;
+      margin-right: 10px;
+    }
+
+    .cart-item .name {
+      font-weight: bold;
+    }
+
+    .cart-item .quantity {
+      display: flex;
+      align-items: center;
+    }
+
+    .cart-item .quantity input {
+      width: 30px;
+      text-align: center;
+    }
+
+    .cart-item .quantity button {
+      background-color: rgb(234, 53, 84);
+      color: #fff;
+      border: none;
+      padding: 5px 10px;
+      margin-left: 10px;
+      cursor: pointer;
+    }
+
+    /* Estilos para el resumen de la compra */
+    #cart-summary {
+      margin-top: 20px;
+      text-align: right;
+    }
+
+    #cart-summary h3 {
+      margin-bottom: 10px;
+    }
+
+    #cart-summary p {
+      margin-bottom: 10px;
+    }
+
+    #checkout-btn {
+      background-color: rgb(234, 53, 84);
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+    }
+
+    #checkout-btn:hover {
+      background-color: #e2385a;
+    }
+  </style>
+  <script>
+    // Obtener elementos del DOM
+    const modal = document.getElementById('modal-cart');
+    const closeBtn = document.getElementsByClassName('close')[0];
+    const cartItems = document.getElementById('cart-items');
+    const cartSummary = document.getElementById('cart-summary');
+    // resumen de la compra
+    const checkoutBtn = document.getElementById('checkout-btn');
+
+    // Función para mostrar el carrito de compras
+    function openCart() {
+      modal.style.display = 'block';
+    }
+
+    // Función para cerrar el carrito de compras
+    function closeCart() {
+      modal.style.display = 'none';
+    }
+
+    // Event listener para el botón de mostrar carrito
+    // Al hacer clic, se mostrará el carrito de compras
+    document.getElementById('show-cart-btn').addEventListener('click', openCart);
+
+    // Event listener para el botón de cerrar
+    // Al hacer clic, se cerrará el carrito de compras
+    closeBtn.addEventListener('click', closeCart);
+
+    // Función para mostrar los productos en el carrito
+    function displayCartItems(items) {
+      cartItems.innerHTML = '';
+
+      items.forEach(item => {
+        // Crear elementos HTML para cada producto
+        const cartItem = document.createElement('div');
+        cartItem.classList.add('cart-item');
+        const name = document.createElement('span');
+        name.classList.add('name');
+        name.textContent = item.name;
+        const image = document.createElement('img');
+        image.src = item.image;
+        const quantity = document.createElement('div');
+        quantity.classList.add('quantity');
+        const minusBtn = document.createElement('button');
+        minusBtn.textContent = '-';
+        const quantityValue = document.createElement('input');
+        quantityValue.type = 'number';
+        quantityValue.value = item.quantity;
+        const plusBtn = document.createElement('button');
+        plusBtn.textContent = '+';
+
+        // Agregar eventos a los botones para aumentar o disminuir la cantidad de productos
+        minusBtn.addEventListener('click', () => {
+          if (item.quantity > 1) {
+            item.quantity--;
+            quantityValue.value = item.quantity;
+            updateCartSummary();
+          }
+        });
+
+        plusBtn.addEventListener('click', () => {
+          item.quantity++;
+          quantityValue.value = item.quantity;
+          updateCartSummary();
+        });
+
+        // Agregar los elementos HTML al carrito
+        quantity.appendChild(minusBtn);
+        quantity.appendChild(quantityValue);
+        quantity.appendChild(plusBtn);
+        cartItem.appendChild(image);
+        cartItem.appendChild(name);
+        cartItem.appendChild(quantity);
+        cartItems.appendChild(cartItem);
+      });
+
+      // Actualizar el resumen del carrito de compras
+      updateCartSummary();
+    }
+
+    // Función para actualizar el resumen del carrito de compras
+    function updateCartSummary() {
+      let total = 0;
+
+      // Calcular el precio total de los productos en el carrito
+      cart.forEach(item => {
+        total += item.price * item.quantity;
+      });
+
+      // Actualizar el texto del precio total en el resumen
+      document.querySelector('#cart-summary p').textContent =`Total: $${ total.toFixed(2) }`;
+    }
+
+    // Array de ejemplo con los productos en el carrito
+    const cart = [
+      {
+        name: 'Producto 1',
+        image: 'https://via.placeholder.com/50',
+        price: 10.99,
+        quantity: 2
+      },
+      {
+        name: 'Producto 2',
+        image: 'https://via.placeholder.com/50',
+        price: 5.99,
+        quantity: 1
+      }
+    ];
+
+    // Mostrar los productos en el carrito
+    displayCartItems(cart);
+
+  </script>
+</body>
+
+</html>

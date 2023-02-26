@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Carrito de compras</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <header>
+    <h1>Carrito de compras</h1>
+  </header>
+  <main>
+    <section id="cart-items">
+      <h2>Artículos en el carrito</h2>
+      <ul>
+        <li>
+          <div class="product">
+            <div class="item-image">
+              <img src="imagen1.jpg" alt="Imagen del producto 1">
+            </div>
+            <div class="item-details">
+              <h3>Producto 1</h3>
+              <p>Marca: XYZ</p>
+              <p>Precio: $20</p>
+            </div>
+          </div>
+          <div class="item-quantity">
+            <button class="quantity-button minus">-</button>
+            <span class="quantity">1</span>
+            <button class="quantity-button plus">+</button>
+          </div>
+        </li>
+        <li>
+          <div class="product">
+            <div class="item-image">
+              <img src="imagen1.jpg" alt="Imagen del producto 1">
+            </div>
+            <div class="item-details">
+              <h3>Producto 1</h3>
+              <p>Marca: XYZ</p>
+              <p>Precio: $20</p>
+            </div>
+          </div>
+          <div class="item-quantity">
+            <button class="quantity-button minus">-</button>
+            <span class="quantity">2</span>
+            <button class="quantity-button plus">+</button>
+          </div>
+        </li>
+      </ul>
+    </section>
+    <section id="summary">
+      <h2>Resumen de la compra</h2>
+      <div id="summary-details">
+        <p>Subtotal: $50</p>
+        <p>Envío: Gratis</p>
+        <p>Total: $50</p>
+      </div>
+      <button id="checkout-button">Pagar</button>
+    </section>
+  </main>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+    }
+
+    header {
+      background-color: rgb(234, 53, 84);
+      color: white;
+      padding: 20px;
+    }
+
+    header h1 {
+      margin: 0;
+    }
+
+    main {
+      padding: 20px;
+    }
+
+    #cart-items {
+      border-bottom: 1px solid lightgray;
+      margin-bottom: 20px;
+      padding-bottom: 20px;
+    }
+
+    #cart-items h2 {
+      font-size: 24px;
+      margin-top: 0;
+    }
+
+    #cart-items ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    #cart-items li {
+      align-items: center;
+      display: flex;
+      margin-bottom: 20px;
+    }
+
+    .item-details {
+      flex: 2;
+      margin-right: 20px;
+    }
+
+    .item-details h3 {
+      margin: 0;
+    }
+
+    .item-details p {
+      margin: 0;
+    }
+
+    .item-quantity {
+      align-items: center;
+      display: flex;
+      flex: 1;
+      justify-content: right;
+    }
+
+    .quantity-button {
+      background-color: rgb(234, 53, 84);
+      border: none;
+      color: white;
+      cursor: pointer;
+      font-size: 18px;
+      height: 30px;
+      margin-right: 5px;
+      width: 30px;
+    }
+
+    .quantity {
+      margin: 0 5px;
+    }
+
+    .item-image {
+      flex: 1;
+    }
+
+    .item-image img {
+      max-height: 100px;
+      max-width: 100px;
+    }
+
+    #summary {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    #summary h2 {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
+    #summary-details {
+      border: 1px solid lightgray;
+      margin-bottom: 20px;
+      padding: 10px;
+      text-align: center;
+      width: 200px;
+    }
+
+    #summary-details p {
+      margin: 0;
+    }
+
+    #checkout-button {
+      background-color: rgb(234, 53, 84);
+      border: none;
+      color: white;
+      cursor: pointer;
+      font-size: 18px;
+      height: 40px;
+      width: 200px;
+    }
+    .product{
+      display: flex;
+    }
+  </style>
+  <script>
+    const minusButtons = document.querySelectorAll(".minus");
+    const plusButtons = document.querySelectorAll(".plus");
+    const quantityValues = document.querySelectorAll(".quantity");
+
+    function decreaseQuantity(index) {
+      if (quantityValues[index].textContent > 1) {
+        quantityValues[index].textContent--;
+      }
+    }
+
+    function increaseQuantity(index) {
+      quantityValues[index].textContent++;
+    }
+
+    for (let i = 0; i < minusButtons.length; i++) {
+      minusButtons[i].addEventListener("click", function () {
+        decreaseQuantity(i);
+      });
+    } for (let i = 0; i < plusButtons.length; i++) {
+      plusButtons[i].addEventListener("click",
+        function () { increaseQuantity(i); });
+    }
+  </script>
+</body>
+
+</html>

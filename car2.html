@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Carrito de compras</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+      margin: 0;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #fff;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      border-radius: 5px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #ea3554;
+      margin-top: 0;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    th {
+      background-color: #ea3554;
+      color: #fff;
+      text-align: left;
+      padding: 10px;
+    }
+
+    td {
+      padding: 10px;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .summary {
+      margin-top: 20px;
+      text-align: right;
+    }
+
+    #cart-total {
+      font-weight: bold;
+      color: #ea3554;
+    }
+
+    button {
+      background-color: #ea3554;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #b82548;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>Carrito de compras</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>Producto</th>
+          <th>Precio</th>
+          <th>Cantidad</th>
+          <th>Subtotal</th>
+        </tr>
+      </thead>
+      <tbody id="cart-items">
+        <!-- Lista de items agregados al carrito -->
+      </tbody>
+    </table>
+    <div class="summary">
+      <h2>Resumen de compra</h2>
+      <p>Total: $<span id="cart-total"></span></p>
+      <button id="checkout-btn">Pagar</button>
+    </div>
+  </div>
+  <script>
+    const cartItems = [
+      {
+        name: 'Camiseta',
+        brand: 'Nike',
+        image: 'https://via.placeholder.com/50x50',
+        price: 30,
+        quantity: 2
+      },
+      {
+        name: 'Zapatillas',
+        brand: 'Adidas',
+        image: 'https://via.placeholder.com/50x50',
+        price: 100,
+        quantity: 1
+      }
+    ];
+
+    const cartItemsTable = document.getElementById('cart-items');
+    const cartTotal = document.getElementById('cart-total');
+    const checkoutBtn = document.getElementById('checkout-btn');
+
+    function renderCart() {
+      // Limpiamos la tabla antes de volver a renderizarla
+      cartItemsTable.innerHTML = '';
+
+      let total = 0;
+
+      // Iteramos sobre los items del carrito
+      cartItems.forEach(item => {
+        // Creamos una fila para cada item
+        const row = document.createElement('tr');
+
+        // Creamos las celdas para cada propiedad del item
+        const nameCell = document.createElement('td');
+        nameCell.innerHTML = `<img src="${item.image}" alt="${item.name}" width="50" height="50"> ${item.name} (${item.brand})`;
+        row.appendChild(nameCell);
+
+        const priceCell = document.createElement('td');
+        priceCell.innerText = `$${item.price}`;
+        row.appendChild(priceCell);
+
+        const quantityCell = document.createElement('td');
+        const quantityInput = document.createElement('input');
+        quantityInput.type = 'number';
+        quantityInput.value = item.quantity;
+        quantityInput.min = 1;
+        quantityInput.addEventListener('input', () => {
+          item.quantity = parseInt(quantityInput.value);
+          renderCart();
+        });
+        quantityCell.appendChild(quantityInput);
+        row.appendChild(quantityCell);
+
+        const subtotalCell = document.createElement('td');
+        subtotalCell.innerText = `$${item.price * item.quantity}`;
+        row.appendChild(subtotalCell);
+
+        // Agregamos la fila a la tabla
+        cartItemsTable.appendChild(row);
+
+        // Sumamos el subtotal al total
+        total += item.price * item.quantity;
+      });
+
+      // Mostramos el total
+      cartTotal.innerText = total.toFixed(2);
+    }
+
+    // Renderizamos la tabla por primera vez
+    renderCart();
+
+    checkoutBtn.addEventListener('click', () => {
+      // Simulamos el proceso de pago
+      alert(`Pago realizado por un total de $${cartTotal.innerText}`);
+    });
+
+  </script>
+</body>
+
+</html>

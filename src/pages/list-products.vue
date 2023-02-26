@@ -22,11 +22,7 @@
                       <div class="card-body">
                         <div class="shop__sidebar__categories">
                           <ul class="nice-scroll">
-                            <li><a href="#">Categoría 1 (10)</a></li>
-                            <li><a href="#">Categoría 2 (20)</a></li>
-                            <li><a href="#">Categoría 3 (20)</a></li>
-                            <li><a href="#">Categoría 4 (30)</a></li>
-                            <li><a href="#">Categoría 5 (20)</a></li>
+                            <li v-for="categoria in arrCategoria"><a href="#">{{ categoria.nombre }}</a></li>
                           </ul>
                         </div>
                       </div>
@@ -40,16 +36,13 @@
                       <div class="card-body">
                         <div class="shop__sidebar__brand">
                           <ul>
-                            <li><a href="#">Faber Castell</a></li>
-                            <li><a href="#">Artesco</a></li>
-                            <li><a href="#">Pilot</a></li>
-                            <li><a href="#">Alpha</a></li>
+                            <li v-for="marca in arrMarca"><a href="#">{{ marca.nombre }}</a></li>
                           </ul>
                         </div>
                       </div>
                     </div>
                   </div>
-                  <div class="card">
+                  <!-- <div class="card">
                     <div class="card-heading">
                       <a data-toggle="collapse" data-target="#collapseThree">FILTRAR PRECIO</a>
                     </div>
@@ -67,7 +60,7 @@
                         </div>
                       </div>
                     </div>
-                  </div>
+                  </div> -->
                   <!-- <div class="card">
                         <div class="card-heading">
                           <a data-toggle="collapse" data-target="#collapseSix">Tags</a>
@@ -95,7 +88,7 @@
               <div class="row">
                 <div class="col-lg-6 col-md-6 col-sm-6">
                   <div class="shop__product__option__left">
-                    <p>Mostrando 1–12 de 126 resultados</p>
+                    <p>Mostrando {{ arrProducts.length }} resultados</p>
                   </div>
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-6">
@@ -114,16 +107,10 @@
                 <div class="product__item">
                   <div class="product__item__pic set-bg" :data-setbg="producto.precio"
                     :style="'background:url(data:image/png;base64,' + producto.imagen + ') no-repeat center center; background-size: cover;'">
-                    <ul class="product__hover">
-                      <li><a href="#"><img src="img/icon/heart.png" alt=""></a></li>
-                      <li><a href="#"><img src="img/icon/compare.png" alt=""> <span>Compare</span></a>
-                      </li>
-                      <li><a href="#"><img src="img/icon/search.png" alt=""></a></li>
-                    </ul>
                   </div>
                   <div class="product__item__text">
                     <h6>{{ producto.nombre_producto }} - <i>{{ producto.nombre_marca }}</i></h6>
-                    <a href="#" class="add-cart">+ Añadir al carrito</a>
+                    <a href="#" @click="addProductToCart(producto)" class="add-cart">+ Añadir al carrito</a>
 
                     <h5>S/. {{ producto.precio }}</h5>
 
@@ -131,7 +118,7 @@
                 </div>
               </div>
             </div>
-            <div class="row">
+            <!-- <div class="row">
               <div class="col-lg-12">
                 <div class="product__pagination">
                   <a class="active" href="#">1</a>
@@ -141,7 +128,7 @@
                   <a href="#">21</a>
                 </div>
               </div>
-            </div>
+            </div> -->
           </div>
         </div>
       </div>
@@ -175,21 +162,51 @@ a {
 }
 </style>
 <script>
-
+import swal from 'sweetalert2';
 export default {
   components: {
+    swal
   },
   data: () => {
     return {
-      arrProducts: []
+      arrProducts: [],
+      arrCategoria: [],
+      arrMarca: []
     };
   },
   created: function () {
     this.$root.getData('listarProducto').then(arrProducts => {
       this.arrProducts = arrProducts;
     });
+    this.$root.getData('listarCategoria').then(arrCategoria => {
+      this.arrCategoria = arrCategoria;
+    });
+    this.$root.getData('listarMarca').then(arrMarca => {
+      this.arrMarca = arrMarca;
+    });
   },
   methods: {
+    addProductToCart(product) {
+      const index = this.$root.userCart.findIndex(item => item.id === product.id);
+      if (index == -1) {
+        product.cantidad = 1;
+        this.$root.userCart.push(product);
+      } else {
+        this.$root.userCart[index].cantidad++;
+      }
+      this.notifyProductAdded();
+      console.log('mine producto,', this.$root.userCart);
+    },
+    notifyProductAdded() {
+      swal.fire({
+        position: 'bottom-end',
+        icon: 'success',
+        title: 'Producto agregado',
+        showConfirmButton: false,
+        timer: 750,
+        iconColor: 'rgb(234 53 84 / 39%)'
+      })
+    }
   }
 }
 </script>

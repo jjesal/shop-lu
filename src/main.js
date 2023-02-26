@@ -9,6 +9,7 @@ const app = new Vue({
   data: {
     currentRoute: window.location.pathname,
     loadingPetition: false,
+    userCart:[]
   },
   computed: {
     ViewComponent() {
