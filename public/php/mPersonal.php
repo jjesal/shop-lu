@@ -6,10 +6,10 @@ class mPersonal
   {
     $sql = "
           INSERT INTO persona
-            (id,rol_id,nombres,apellidos,correo,celular,dni,password)
+            (id,rol_id,nombres,apellidos,correo,celular,dni,password,direccion)
           VALUES
-            ($persona[id],$persona[rol_id],'$persona[nombres]','$persona[apellidos]','$persona[correo]','$persona[celular]','$persona[dni]','$persona[password]')
-          ON DUPLICATE KEY UPDATE rol_id='$persona[rol_id]', nombres='$persona[nombres]', apellidos='$persona[apellidos]',correo='$persona[correo]',celular='$persona[celular]', dni='$persona[dni]', password='$persona[password]'";
+            ($persona[id],$persona[rol_id],'$persona[nombres]','$persona[apellidos]','$persona[correo]','$persona[celular]','$persona[dni]','$persona[password]','$persona[direccion]')
+          ON DUPLICATE KEY UPDATE rol_id='$persona[rol_id]', nombres='$persona[nombres]', apellidos='$persona[apellidos]',correo='$persona[correo]',celular='$persona[celular]', dni='$persona[dni]', password='$persona[password]', direccion='$persona[direccion]'";
     $rsql = $this->select_msql($sql);
     return $rsql;
   }
@@ -31,7 +31,7 @@ class mPersonal
 
   function select_msql($sql)
   {
-    // echo $sql;
+      // echo $sql;
     $cnx = cnx();
     $rsql = mysqli_query($cnx, $sql);
     try {

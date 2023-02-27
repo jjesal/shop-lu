@@ -2,36 +2,6 @@
   <div id="app">
     <main-layout>
       <div>
-        <!-- Offcanvas Menu Begin -->
-        <div class="offcanvas-menu-overlay"></div>
-        <div class="offcanvas-menu-wrapper">
-          <div class="offcanvas__option">
-            <div class="offcanvas__links">
-              <a href="#">Sign in</a>
-              <a href="#">FAQs</a>
-            </div>
-            <div class="offcanvas__top__hover">
-              <span>Usd <i class="arrow_carrot-down"></i></span>
-              <ul>
-                <li>USD</li>
-                <li>EUR</li>
-                <li>USD</li>
-              </ul>
-            </div>
-          </div>
-          <div class="offcanvas__nav__option">
-            <a href="#" class="search-switch"><img src="img/icon/search.png" alt=""></a>
-            <a href="#"><img src="img/icon/heart.png" alt=""></a>
-            <a href="#"><img src="img/icon/cart.png" alt=""> <span>0</span></a>
-            <div class="price">S/. 0.00</div>
-          </div>
-          <div id="mobile-menu-wrap"></div>
-          <div class="offcanvas__text">
-            <p>Free shipping, 30-day return or refund guarantee.</p>
-          </div>
-        </div>
-        <!-- Offcanvas Menu End -->
-
         <!-- Header Section Begin -->
         <header class="header">
           <div class="x-container">
@@ -44,17 +14,21 @@
               <div class="col-lg-6 col-md-6">
                 <nav class="header__menu mobile-menu">
                   <ul>
-                    <li class="active" @click="manageActive($event)"><a v-on:click="()=>{view.page = 'list-products'; view.title = 'Productos'}">Inicio</a>
+                    <li class="active" @click="manageActive($event)"><a
+                        v-on:click="() => { view.page = 'list-products'; view.title = 'Productos' }">Inicio</a>
                     </li>
-                    <li @click="manageActive($event)"><a v-on:click="()=>{view.page = 'car-page'; view.title = 'Carrito'}">Carrito</a></li>
+                    <li id="menu-carrito" @click="manageActive($event)"><a
+                        v-on:click="() => { view.page = 'car-page'; view.title = 'Carrito' }">Carrito</a></li>
                     <!-- <li><a >xx</a></li> -->
-                    <li id="dropmenu"><a>Mantenimiento</a>
+                    <li v-if="$root.userLogged.rol_id===1" id="dropmenu"><a>Mantenimiento</a>
                       <ul class="dropdown">
-                        <li @click="manageActive($event, 'dropmenu')"><a v-on:click="()=>{view.page = 'register-category'; view.title = 'Categorías'}"
+                        <li @click="manageActive($event, 'dropmenu')"><a
+                            v-on:click="() => { view.page = 'register-category'; view.title = 'Categorías' }"
                             href="#">Categorías</a></li>
-                        <li @click="manageActive($event, 'dropmenu')"><a v-on:click="()=>{view.page = 'register-mark'; view.title = 'Marcas'}"
-                            href="#">Marcas</a></li>
-                        <li @click="manageActive($event, 'dropmenu')"><a v-on:click="()=>{view.page = 'register-products'; view.title = 'Registrar producto'}"
+                        <li @click="manageActive($event, 'dropmenu')"><a
+                            v-on:click="() => { view.page = 'register-mark'; view.title = 'Marcas' }" href="#">Marcas</a></li>
+                        <li @click="manageActive($event, 'dropmenu')"><a
+                            v-on:click="() => { view.page = 'register-products'; view.title = 'Registrar producto' }"
                             href="#">Registrar producto</a></li>
                       </ul>
                     </li>
@@ -64,8 +38,9 @@
               <div class="col-lg-3 col-md-3">
                 <div class="header__nav__option">
                   <a href="#" class="search-switch"><img src="img/icon/search.png" alt=""></a>
-                  <a href="#"><img src="img/icon/cart.png" alt=""> <span>0</span></a>
-                  <div class="price">S/. 0.00</div>
+                  <a @click="manageActive($event, 'menu-carrito')"><i
+                      v-on:click="() => { view.page = 'car-page'; view.title = 'Carrito' }" class="bi bi-cart"></i></a>
+                  <div class="price">{{ this.$root.userCart.length }}</div>
                   <a href="#" @click="logout" class="logout-btn">Cerrar sesión</a>
                 </div>
               </div>

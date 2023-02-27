@@ -9,7 +9,10 @@ const app = new Vue({
   data: {
     currentRoute: window.location.pathname,
     loadingPetition: false,
-    userCart:[]
+    userCart:[],
+    userLogged: {
+      rol_id:3
+    }
   },
   computed: {
     ViewComponent() {
@@ -60,7 +63,7 @@ const app = new Vue({
           if (response.hasOwnProperty('connected') && !response.connected) {
             this.navigate('login');
           } else {
-            resolve(response.data);
+            resolve(response.data||response);
           }
         }).catch(e => reject(e)).finally(() => {
           this.$root.loadingPetition = false;
@@ -78,7 +81,7 @@ const app = new Vue({
             if (this.currentRoute === '/login' || this.currentRoute === '/') {
               this.navigate('home');
             }
-            this.$root.userLogged = true;
+            this.$root.userLogged = response;
           } else {
             this.navigate('login');
           }

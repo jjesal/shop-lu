@@ -13,6 +13,23 @@ INSERT INTO `rol_has_acceso` (`rol_id`, `acceso_id`) VALUES (1, 2);
 INSERT INTO `rol_has_acceso` (`rol_id`, `acceso_id`) VALUES (1, 3);
 INSERT INTO `rol_has_acceso` (`rol_id`, `acceso_id`) VALUES (1, 4);
 INSERT INTO `rol_has_acceso` (`rol_id`, `acceso_id`) VALUES (1, 5);
+INSERT INTO persona(id,
+rol_id,
+nombres,
+apellidos,
+correo,
+celular,
+dni,
+password,
+direccion)VALUES(NULL,
+1,
+'admin',
+'admin',
+'admin@gmail.com',
+'000000000',
+'00000000',
+'admin',
+'##');
 ##ROL CLIENTE
 INSERT INTO `rol_has_acceso` (`rol_id`, `acceso_id`) VALUES (3, 3);
 ##ROL VENDEDOR

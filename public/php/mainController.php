@@ -13,6 +13,8 @@ include("./lCategoria.php");
 include("./mCategoria.php");
 include("./lMarca.php");
 include("./mMarca.php");
+include("./lOrden.php");
+include("./mOrden.php");
 
 // $cookieParams = session_get_cookie_params();
 // $cookieParams['samesite'] = "none";
@@ -68,6 +70,11 @@ if ($serverResponse['connected'] === true) {
         $typeData = 1;
         break;
       }
+      case 'insertarOrden': {
+        insertarOrden();
+        $typeData = 1;
+        break;
+      }
     case 'insertarCategoria': {
         insertarCategoria();
         $typeData = 1;
@@ -78,7 +85,7 @@ if ($serverResponse['connected'] === true) {
         $typeData = 1;
         break;
       }
-      case 'listarCategoria': {
+    case 'listarCategoria': {
         listarCategoria();
         $typeData = 1;
         break;

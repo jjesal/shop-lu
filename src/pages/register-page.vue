@@ -8,6 +8,7 @@
           <input v-model="persona.apellidos" placeholder="Apellidos" required />
           <input v-model="persona.dni" placeholder="DNI" maxlength="8" required />
           <input v-model="persona.celular" placeholder="Celular" maxlength="9" required />
+          <input v-model="persona.direccion" placeholder="Direccion" type="text" required />
           <input v-model="persona.correo" placeholder="Correo electrónico" type="email" required />
           <input v-model="persona.password" placeholder="Contraseña" type="password" required />
           <input class="my-btn" type="submit" value="Enviar">

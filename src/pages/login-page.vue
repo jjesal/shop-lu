@@ -38,7 +38,8 @@ export default {
       e.preventDefault();
       this.validate();
       this.$root.postData('comprobarUsuario', { user: this.user })
-        .then(() => {
+        .then((response) => {
+          this.$root.userLogged = response;
           this.$root.navigate('home')
         })
         .catch(function () { })

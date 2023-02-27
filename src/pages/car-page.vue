@@ -1,7 +1,15 @@
 <template>
   <div id="app">
     <main-layout>
-      <div class="background">
+      <div v-if="showSummary" class="background">
+        <main>
+          <h2>Compra realizada con éxito</h2>
+          <p>
+            Código de orden: <b>{{ codigoOrden }}</b>
+          </p>
+        </main>
+      </div>
+      <div v-else class="background">
         <header>
           <h1><i class="bi bi-cart"></i> Carrito de compras</h1>
         </header>
@@ -21,7 +29,7 @@
                   </div>
                 </div>
                 <div class="item-quantity">
-                  <button @click="decreaseQuantity(producto,index)" class="quantity-button minus">-</button>
+                  <button @click="decreaseQuantity(producto, index)" class="quantity-button minus">-</button>
                   <span class="quantity">{{ producto.cantidad }}</span>
                   <button @click="increaseQuantity(producto)" class="quantity-button plus">+</button>
                 </div>
@@ -35,7 +43,7 @@
               <p>Envío: Gratis</p> -->
               <p>Total: S/. {{ calcularCostoTotal }}</p>
             </div>
-            <button id="checkout-button" class="my-btn">Registrar pedido</button>
+            <button @click="register()" id="checkout-button" class="my-btn">Registrar pedido</button>
           </section>
         </main>
         <main v-else>
@@ -45,7 +53,9 @@
             <button class="my-btn">Elegir productos</button>
           </div>
         </main>
+
       </div>
+
     </main-layout>
   </div>
 </template>
@@ -64,7 +74,19 @@ export default {
     return {
       minusButtons: document.querySelectorAll(".minus"),
       plusButtons: document.querySelectorAll(".plus"),
-      quantityValues: document.querySelectorAll(".quantity")
+      quantityValues: document.querySelectorAll(".quantity"),
+      ordenCompra: {
+        id: 'NULL',
+        persona_id: '',
+        listaProductos: [
+          {
+            producto_id: '',
+            precio: 0
+          }
+        ]
+      },
+      showSummary: false,
+      codigoOrden: '#00000'
     };
   },
   computed: {
@@ -74,46 +96,33 @@ export default {
         return costoTotal + producto.cantidad * producto.precio;
       }, 0);
     },
-    existenItems(){
-      return this.$root.userCart.length>0;
+    existenItems() {
+      return this.$root.userCart.length > 0;
     }
   },
   created: function () {
-
   },
   methods: {
-    isLoggedIn(bool) {
-      //si es true, es llamado por login
-      // comprueba si ya existe la sesion en el servidor
-      this.axios
-        .post(
-          document.pathdev + "/php/mainController.php?op=isLoggedIn",
-          {},
-          { withCredentials: true }
-        )
-        .then(respuesta => {
-          if (respuesta.data.connected) {
-            //si ya está conectado
-            if (this.$router.currentRoute.path != "/inicio") {
-              this.$router.push("/inicio"); //redirige a vista principal
-            }
-            this.$root.usuario.acc = respuesta.data.acc;
-          } else {
-            if (bool) {
-              this.msgError = "¡Datos incorrectos!";
-            }
-          }
+    register() {
+      this.ordenCompra.persona_id = this.$root.userLogged.id;
+      this.ordenCompra.listaProductos = this.$root.userCart.map(item => ({ id: item.id, precio: item.precio, cantidad: item.cantidad }));
+      console.log('this.ordenCompra', this.ordenCompra);
 
-          this.loaded = true;
-        });
+      this.$root.postData('insertarOrden', this.ordenCompra)
+        .then((rs) => {
+          this.codigoOrden += rs;
+          this.showSummary = true;
+          this.$root.userCart = [];
+        })
+        .catch(function () { })
     },
     decreaseQuantity(producto, index) {
       if (producto.cantidad > 1) {
         producto.cantidad--;
         console.log('producto--', producto)
         this.refreshArray();
-      }else{
-        this.$root.userCart.splice(index,1)
+      } else {
+        this.$root.userCart.splice(index, 1)
       }
     },
 
@@ -124,7 +133,7 @@ export default {
 
     refreshArray() {
       this.$root.userCart = [...this.$root.userCart]
-    },
+    }
   }
 }
 </script>

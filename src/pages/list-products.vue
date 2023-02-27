@@ -204,7 +204,7 @@ export default {
         title: 'Producto agregado',
         showConfirmButton: false,
         timer: 750,
-        iconColor: 'rgb(234 53 84 / 39%)'
+          // iconColor: 'rgb(234 53 84 / 39%)'
       })
     }
   }

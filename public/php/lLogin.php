@@ -11,8 +11,8 @@ function comprobarUsuario()
         $usuario = $axios_data['user'];
         $funciones = new mLogin();
         $result = $funciones->comprobarUsuario($usuario["acc"], $usuario["pass"]);
-        if ($fila=mysqli_fetch_assoc($result)) {
-            $usuario=$fila;
+        if ($fila = mysqli_fetch_assoc($result)) {
+            $usuario = $fila;
             $_SESSION['user'] = $usuario;
             $loggedIn = true;
         }
@@ -30,8 +30,7 @@ function isLoggedIn()
     if (isset($_SESSION['user'])) {
         $loggedIn = true;
     }
-
-    return $serverResponse = ['connected' => $loggedIn,"acc"=>isset($_SESSION['user'])?$_SESSION['user']['correo']:null];
+    return $serverResponse = ['connected' => $loggedIn, "acc" => isset($_SESSION['user']) ? $_SESSION['user']['correo'] : null, "id" => isset($_SESSION['user']) ? $_SESSION['user']['id'] : null, "rol_id" => isset($_SESSION['user']) ? $_SESSION['user']['rol_id'] : null];
 }
 function cerrarSesion()
 {
