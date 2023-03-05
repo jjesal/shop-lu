@@ -6,15 +6,15 @@
           <label>Registro de Marcas</label>
           <form id="mark-form" @submit="registerMark">
             <div class="form-group">
-              <input name="id" value="NULL" hidden>
+              <input v-model="marca.id" name="id" value="NULL" hidden>
               <label for="exampleFormControlInput1">Nombre de marca</label>
-              <input name="nombre_marca" required type="text" class="form-control" id="exampleFormControlInput1"
-                placeholder="Faber Castell...">
+              <input v-model="marca.nombre" name="nombre_marca" required type="text" class="form-control"
+                id="exampleFormControlInput1" placeholder="Faber Castell...">
             </div>
             <input class="my-btn" type="submit" value="Guardar">
           </form>
           <br><br>
-          <list-items :arrItems="arrMarca" :arrHeadKey="arrHeadKey"></list-items>
+          <list-items @evt-editar="updateForm" :arrItems="arrMarca" :arrHeadKey="arrHeadKey"></list-items>
         </div>
       </div>
     </main-layout>
@@ -33,9 +33,8 @@ export default {
   },
   data: () => {
     return {
-      categoria: {
+      marca: {
         id: 'NULL',
-        categoría: 1
       },
       arrMarca: [],
       arrHeadKey: [{ head: '#', key: 'id' }, { head: 'Nombre', key: 'nombre' }]
@@ -45,6 +44,9 @@ export default {
     this.getList();
   },
   methods: {
+    updateForm(index) {
+      this.marca = { ...this.arrMarca[index] };
+    },
     registerMark(e) {
       e.preventDefault();
       const formData = new FormData(document.querySelector('#mark-form'))
@@ -52,6 +54,9 @@ export default {
         .then((rs) => {
           console.log('rs', rs);
           document.querySelector('#mark-form').reset();
+          this.marca = {
+            id: 'NULL',
+          }
           this.getList();
         })
         .catch(function () { })

@@ -25,15 +25,18 @@
 
 export default {
     name: 'registerPerson',
-    props: ['rolId', 'showRol'],
+    props: {
+        rolId: '3',
+        showRol: false,
+        persona: {
+            id: 'NULL',
+            rol_id: '3'
+        }
+    },
     components: {
     },
     data: () => {
         return {
-            persona: {
-                id: 'NULL',
-                rol_id: '3'
-            },
             arrRol: [],
         };
     },

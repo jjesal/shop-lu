@@ -2,10 +2,10 @@
   <div id="app">
     <main-layout>
       <div class="background">
-        <register-person @evt-reload-list="getList" :showRol="true">
+        <register-person :persona="persona" @evt-reload-list="getList" :showRol="true">
         </register-person>
         <br><br>
-        <list-items  :arrItems="arrPersona" :arrHeadKey="arrHeadKey"></list-items>
+        <list-items @evt-editar="updateForm" :arrItems="arrPersona" :arrHeadKey="arrHeadKey"></list-items>
       </div>
     </main-layout>
   </div>
@@ -26,15 +26,26 @@ export default {
   data: () => {
     return {
       arrPersona: [],
-      arrHeadKey: [{ head: 'DNI', key: 'dni' }, { head: 'Nombre', key: 'nombre' },{ head: 'Rol', key: 'nombre_rol' },{ head: 'Celular', key: 'celular' },
-      { head: 'Correo', key: 'correo' }, { head: 'Dirección', key: 'direccion' }]
+      arrHeadKey: [{ head: 'DNI', key: 'dni' }, { head: 'Nombre', key: 'nombre' }, { head: 'Rol', key: 'nombre_rol' }, { head: 'Celular', key: 'celular' },
+      { head: 'Correo', key: 'correo' }, { head: 'Dirección', key: 'direccion' }],
+      persona: {
+        id: 'NULL',
+        rol_id: '2'
+      }
     };
   },
   created: function () {
     this.getList();
   },
   methods: {
+    updateForm(index) {
+      this.persona = { ...this.arrPersona[index] };
+    },
     getList() {
+      this.persona = {
+        id: 'NULL',
+        rol_id: '2'
+      };
       this.$root.getData('listarPersona').then(arrPersona => {
         this.arrPersona = arrPersona;
       });

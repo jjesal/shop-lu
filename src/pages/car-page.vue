@@ -50,7 +50,7 @@
           <div>
             <h2>Su carrito está vacio</h2>
             <p>Para seguir comprando, navegar por las categorías en el sitio, o busque su producto.</p>
-            <button class="my-btn">Elegir productos</button>
+            <!-- <button class="my-btn">Elegir productos</button> -->
           </div>
         </main>
 

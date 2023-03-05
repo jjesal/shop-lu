@@ -6,4 +6,5 @@ export default {
   '/register-products': 'register-products',
   '/cart': 'cart-page',
   '/manage-users': 'manage-persons',
+  '/list-user-orders': 'list-user-orders'
 }

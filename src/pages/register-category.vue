@@ -6,16 +6,16 @@
           <label>Registro de Categorias</label>
           <form id="category-form" @submit="registerCategory">
             <div class="form-group">
-              <input name="id" value="NULL" hidden>
+              <input v-model="categoria.id" name="id" value="NULL" hidden>
               <label for="exampleFormControlInput1">Nombre de categoria</label>
-              <input required name="nombre_categoria" type="text" class="form-control" id="exampleFormControlInput1"
-                placeholder="Libros...">
+              <input v-model="categoria.nombre" required name="nombre_categoria" type="text" class="form-control"
+                id="exampleFormControlInput1" placeholder="Libros...">
             </div>
 
             <input class="my-btn" type="submit" value="Guardar">
           </form>
           <br><br>
-          <list-items :arrItems="arrCategoria" :arrHeadKey="arrHeadKey"></list-items>
+          <list-items @evt-editar="updateForm" :arrItems="arrCategoria" :arrHeadKey="arrHeadKey"></list-items>
         </div>
       </div>
     </main-layout>
@@ -35,8 +35,7 @@ export default {
   data: () => {
     return {
       categoria: {
-        id: 'NULL',
-        categoría: 1
+        id: 'NULL'
       },
       arrCategoria: [],
       arrHeadKey: [{ head: '#', key: 'id' }, { head: 'Nombre', key: 'nombre' }]
@@ -53,6 +52,9 @@ export default {
         .then((rs) => {
           console.log('rs', rs);
           document.querySelector('#category-form').reset();
+          this.categoria = {
+            id: 'NULL',
+          }
           this.getList();
         })
         .catch(function () { })
@@ -61,6 +63,9 @@ export default {
       this.$root.getData('listarCategoria').then(arrCategoria => {
         this.arrCategoria = arrCategoria;
       });
+    },
+    updateForm(index) {
+      this.categoria = { ...this.arrCategoria[index] };
     },
     isLoggedIn(bool) {
       //si es true, es llamado por login

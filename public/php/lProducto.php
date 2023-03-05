@@ -4,7 +4,11 @@ function insertarProducto()
     global $axios_data;
     $funciones = new mProducto();
     $producto = $axios_data;
-    $producto["imagen"] = getImage();
+    if ($producto['id'] == 'NULL' || (isset($_FILES["imagen"]) && getimagesize($_FILES["imagen"]["tmp_name"]))) {
+        $producto["imagen"] = getImage();
+    } else {
+        $producto["imagen"] = null;
+    }
     $funciones->insertar($producto);
     listarProducto();
 }

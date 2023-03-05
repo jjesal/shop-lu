@@ -6,14 +6,15 @@
           <label>Registro de Productos</label>
           <form id="form_product" @submit="register">
             <div class="form-group">
-              <input name="id" value="NULL" hidden>
+              <input v-model="producto.id" name="id" value="NULL" hidden>
               <label for="input_name">Nombre del producto</label>
-              <input name="nombre_producto" required type="text" class="form-control" id="input_name"
-                placeholder="Ingresar el nombre del producto...">
+              <input v-model="producto.nombre_producto" name="nombre_producto" required type="text" class="form-control"
+                id="input_name" placeholder="Ingresar el nombre del producto...">
             </div>
             <div class="form-group">
               <label for="select_category">Categoría</label>
-              <select name="categoria_id" required class="form-control" id="select_category">
+              <select v-model="producto.categoria_id" name="categoria_id" required class="form-control"
+                id="select_category">
                 <option v-for="option in arrCategoria" :value="option.value">
                   {{ option.text }}
                 </option>
@@ -21,7 +22,7 @@
             </div>
             <div class="form-group">
               <label for="select_marca">Marca</label>
-              <select name="marca_id" required class="form-control" id="select_marca">
+              <select v-model="producto.marca_id" name="marca_id" required class="form-control" id="select_marca">
                 <option v-for="option in arrMarca" :value="option.value">
                   {{ option.text }}
                 </option>
@@ -30,28 +31,30 @@
 
             <div class="form-group">
               <label for="input_image">Imagen del producto</label>
-              <input name="imagen" required type="file" class="form-control-file" id="input_image">
+              <input name="imagen" :required="producto.id === 'NULL'" type="file" class="form-control-file"
+                id="input_image">
             </div>
 
             <div class="form-group">
               <label for="input_desc">Descripción</label>
-              <textarea name="descripcion" placeholder="Una breve descripción del producto..." class="form-control"
-                id="input_desc" rows="3"></textarea>
+              <textarea v-model="producto.descripcion" name="descripcion"
+                placeholder="Una breve descripción del producto..." class="form-control" id="input_desc"
+                rows="3"></textarea>
             </div>
             <div class="form-group">
               <label for="input_precio">Precio</label>
-              <input name="precio" step="0.01" type="number" required class="form-control" id="input_precio"
-                placeholder="S/.">
+              <input v-model="producto.precio" name="precio" step="0.01" required type="number" class="form-control"
+                id="input_precio" placeholder="S/.">
             </div>
             <div class="form-group">
               <label for="input_stock">stock</label>
-              <input name="stock" type="number" required class="form-control" id="input_stock"
+              <input v-model="producto.stock" name="stock" type="number" required class="form-control" id="input_stock"
                 placeholder="Cantidad de productos en stock">
             </div>
             <input class="my-btn" type="submit" value="Enviar">
           </form>
           <br><br>
-          <list-items :arrItems="arrProducts" :arrHeadKey="arrHeadKey"></list-items>
+          <list-items @evt-editar="updateForm" :arrItems="arrProducts" :arrHeadKey="arrHeadKey"></list-items>
         </div>
       </div>
     </main-layout>
@@ -71,8 +74,7 @@ export default {
   data: () => {
     return {
       producto: {
-        id: 'NULL',
-        categoría: 1
+        id: 'NULL'
       },
       arrCategoria: [],
       arrMarca: [],
@@ -101,9 +103,15 @@ export default {
     loadImage(event) {
       this.producto.imagen = event.target.files;
     },
+    updateForm(index) {
+      this.producto = { ...this.arrProducts[index] };
+    },
     register(e) {
       e.preventDefault();
       const formData = new FormData(document.querySelector('.main-form form'))
+      if (document.querySelector('#input_image').value == '') {
+        formData.delete('imagen');
+      }
       this.$root.postData('insertarProducto', formData, 'form')
         .then((rs) => {
           console.log('rs', rs);
@@ -141,6 +149,9 @@ export default {
     },
     reset() {
       document.querySelector('#form_product').reset();
+      this.producto = {
+        id: 'NULL'
+      };
     },
     getList() {
       this.$root.getData('listarProducto').then(arrProducts => {

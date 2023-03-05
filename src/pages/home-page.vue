@@ -2,13 +2,42 @@
   <div id="app">
     <main-layout>
       <div>
+        <!-- Offcanvas Menu Begin -->
+        <!-- <div class="offcanvas-menu-overlay"></div>
+        <div class="offcanvas-menu-wrapper">
+          <div class="offcanvas__option">
+            <div class="offcanvas__links">
+              <a href="#">Sign in</a>
+              <a href="#">FAQs</a>
+            </div>
+            <div class="offcanvas__top__hover">
+              <span>Usd <i class="arrow_carrot-down"></i></span>
+              <ul>
+                <li>USD</li>
+                <li>EUR</li>
+                <li>USD</li>
+              </ul>
+            </div>
+          </div>
+          <div class="offcanvas__nav__option">
+            <a href="#" class="search-switch"><img src="img/icon/search.png" alt=""></a>
+            <a href="#"><img src="img/icon/heart.png" alt=""></a>
+            <a href="#"><img src="img/icon/cart.png" alt=""> <span>0</span></a>
+            <div class="price">S/. 0.00</div>
+          </div>
+          <div id="mobile-menu-wrap"></div>
+          <div class="offcanvas__text">
+            <p>Free shipping, 30-day return or refund guarantee.</p>
+          </div>
+        </div> -->
+        <!-- Offcanvas Menu End -->
         <!-- Header Section Begin -->
         <header class="header">
           <div class="x-container">
             <div class="row">
               <div class="col-lg-3 col-md-3">
                 <div class="header__logo">
-                  <a href="./index.html"><img src="img/logo.png" alt=""></a>
+                  <!-- <a href="./index.html"><img src="../assets/logo.png" alt=""></a> -->
                 </div>
               </div>
               <div class="col-lg-6 col-md-6">
@@ -19,6 +48,9 @@
                     </li>
                     <li id="menu-carrito" @click="manageActive($event)"><a
                         v-on:click="() => { view.page = 'car-page'; view.title = 'Carrito' }">Carrito</a></li>
+                    <li id="menu-user-orders" @click="manageActive($event)"><a
+                        v-on:click="() => { view.page = 'list-user-orders'; view.title = 'Mis pedidios' }">Mis
+                        pedidios</a></li>
                     <!-- <li><a >xx</a></li> -->
                     <li v-if="$root.userLogged.rol_id === 1" id="dropmenu"><a>Mantenimiento</a>
                       <ul class="dropdown">
@@ -32,8 +64,8 @@
                             v-on:click="() => { view.page = 'register-products'; view.title = 'Registrar producto' }"
                             href="#">Registrar producto</a></li>
                         <li @click="manageActive($event, 'dropmenu')"><a
-                            v-on:click="() => { view.page = 'list-orders'; view.title = 'Órdenes de venta' }"
-                            href="#">Órdenes de venta</a></li>
+                            v-on:click="() => { view.page = 'list-orders'; view.title = 'Órdenes de compra' }"
+                            href="#">Órdenes de compra</a></li>
                         <li @click="manageActive($event, 'dropmenu')"><a
                             v-on:click="() => { view.page = 'manage-persons'; view.title = 'Usuarios' }"
                             href="#">Usuarios</a></li>
@@ -59,7 +91,7 @@
                 </div>
               </div>
             </div>
-            <div class="canvas__open"><i class="fa fa-bars"></i></div>
+            <!-- <div class="canvas__open"><i class="fa fa-bars"></i></div> -->
           </div>
         </header>
         <!-- Header Section End -->
@@ -68,7 +100,10 @@
         <section class="breadcrumb-option">
           <div class="container">
             <div class="row">
-              <div class="col-lg-12">
+              <div class="col-sm-2">
+                <img src="../assets/logo.png" alt="">
+              </div>
+              <div class="col-sm-10">
                 <div class="breadcrumb__text">
                   <h4>Sumaq Yawar</h4>
                   <div class="breadcrumb__links">
@@ -122,6 +157,7 @@ a {
 <script>
 import MainLayout from '../layouts/main-layout.vue'
 import listOrders from '../pages/list-orders.vue'
+import listUserOrders from '../pages/list-user-orders.vue'
 import listProducts from '../pages/list-products.vue'
 import registerProducts from '../pages/register-products.vue'
 import registerCategory from '../pages/register-category.vue'
@@ -142,7 +178,8 @@ export default {
     carPage,
     spinnerVeil,
     swal,
-    managePersons
+    managePersons,
+    listUserOrders
   },
   data: () => {
     return {
@@ -152,8 +189,11 @@ export default {
       }
     };
   },
-  created: function () {
-    console.log('mine holaaa');
+  mounted: function () {
+    // document.querySelector('div.canvas__open').addEventListener('click', (e) => {
+    //   document.querySelector('div.offcanvas-menu-wrapper').classList.toggle('active');
+    //   document.querySelector('div.offcanvas-menu-overlay').classList.toggle('active');
+    // })
   },
   methods: {
     manageActive(event, alternative) {

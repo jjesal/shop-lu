@@ -7,8 +7,8 @@
           <div class="col-lg-3">
             <div class="shop__sidebar">
               <div class="shop__sidebar__search">
-                <form action="#">
-                  <input type="text" placeholder="Buscar...">
+                <form>
+                  <input type="text" v-model="txtBusqueda" @keyup="handleSearch" placeholder="Buscar...">
                   <button type="submit"><span class="icon_search"></span></button>
                 </form>
               </div>
@@ -61,9 +61,9 @@
                 <div class="col-lg-6 col-md-6 col-sm-6">
                   <div class="shop__product__option__right">
                     <p>Ordenar por precio:</p>
-                    <select>
-                      <option value="">Menor a Mayor</option>
-                      <option value="">Mayor a Menor</option>
+                    <select v-model="orderType" @change="listProducts">
+                      <option value="DESC">Menor a Mayor</option>
+                      <option value="ASC">Mayor a Menor</option>
                     </select>
                   </div>
                 </div>
@@ -114,6 +114,13 @@ a {
 .logout-btn {
   padding-left: 10px;
 }
+
+.shop__sidebar__categories ul li a,
+.shop__sidebar__price ul li a,
+.shop__sidebar__brand ul li a {
+  color: #626262;
+  font-size: 1.1rem;
+}
 </style>
 <script>
 import swal from 'sweetalert2';
@@ -130,10 +137,12 @@ export default {
       operadorBusqueda: 'LIKE',
       campoCategoria: 'categoria.id',
       campoMarca: 'marca.id',
-      campoBusqueda: 'producto.nombre_producto'
+      campoBusqueda: 'producto.nombre_producto',
+      txtBusqueda: '',
+      orderType: 'DESC'
     };
   },
-  created: function () {
+  mounted: function () {
     this.listProducts();
     this.$root.getData('listarCategoria').then(arrCategoria => {
       this.arrCategoria = arrCategoria;
@@ -141,6 +150,11 @@ export default {
     this.$root.getData('listarMarca').then(arrMarca => {
       this.arrMarca = arrMarca;
     });
+    document.querySelectorAll('a[data-toggle="collapse"]').forEach(a => {
+      a.addEventListener('click', (e) => {
+        document.querySelector(e.target.dataset.target).classList.toggle('show');
+      })
+    })
   },
   methods: {
     addProductToCart(product) {
@@ -180,10 +194,23 @@ export default {
       };
       this.listProducts(condiciones);
     },
-    listProducts(condiciones = {}) {
-      this.$root.postData('listarProducto', condiciones).then(arrProducts => {
+    listProducts(condiciones = {}) {//orderType
+      this.$root.postData('listarProducto', { ...condiciones, orderType: this.orderType }).then(arrProducts => {
         this.arrProducts = arrProducts;
       });
+    },
+    handleSearch() {
+      let condiciones = {};
+      if (this.txtBusqueda != '') {
+        condiciones = {
+          campo: this.campoBusqueda,
+          operador: this.operadorBusqueda,
+          valor: `%${this.txtBusqueda}%`
+        };
+      } else {
+        condiciones = {}
+      }
+      this.listProducts(condiciones);
     }
   }
 }

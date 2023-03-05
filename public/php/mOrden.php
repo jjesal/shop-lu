@@ -49,7 +49,7 @@ class mOrden
     $rsql = $this->select_msql($sql);
     return $rsql;
   }
-  function listar()
+  function listar($condiciones = null)
   {
     $sql = "
     select
@@ -71,6 +71,9 @@ class mOrden
       inner join marca
       on producto.marca_id=marca.id
           ";
+    if (isset($condiciones['campo'])) {
+      $sql .= " WHERE $condiciones[campo] $condiciones[operador] '$condiciones[valor]' ";
+    }
     $rsql = $this->select_msql($sql);
     return $rsql;
   }

@@ -41,8 +41,8 @@ export default {
             type: Array,
             default: function () {
                 return [
-                    { name: 'Editar', event: 'evt-editar' },
-                    { name: 'Eliminar', event: 'evt-eliminar' }
+                    { name: 'Editar', event: 'evt-editar' }
+                    // { name: 'Eliminar', event: 'evt-eliminar' }
                 ]
             }
         }

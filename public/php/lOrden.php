@@ -19,10 +19,12 @@ function actualizarEstado()
 
 function listarOrden()
 {
+    global $axios_data;
     global $serverResponse;
     $registros = array();
     $funciones = new mOrden();
-    $result = $funciones->listar();
+    $condiciones = $axios_data;
+    $result = $funciones->listar($condiciones);
     while ($fila = mysqli_fetch_assoc($result)) {
         $registros[] = $fila;
     }
