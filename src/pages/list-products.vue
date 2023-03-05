@@ -77,6 +77,7 @@
                   </div>
                   <div class="product__item__text">
                     <h6>{{ producto.nombre_producto }} - <i>{{ producto.nombre_marca }}</i></h6>
+                    <a href="#" @click="addProductToCart(producto)" class="add-cart">+ Añadir al carrito</a>
                     <h5>S/. {{ parseFloat(producto.precio).toFixed(2) }}</h5>
                   </div>
                 </div>
