@@ -108,7 +108,6 @@ export default {
       this.ordenCompra.persona_id = this.$root.userLogged.id;
       this.ordenCompra.listaProductos = this.$root.userCart.map(item => ({ id: item.id, precio: item.precio, cantidad: item.cantidad }));
       console.log('this.ordenCompra', this.ordenCompra);
-
       this.$root.postData('insertarOrden', this.ordenCompra)
         .then((rs) => {
           this.codigoOrden = rs;

@@ -20,7 +20,7 @@ class mProducto
     $rsql = $this->select_msql($sql);
     return $rsql;
   }
-  function listar()
+  function listar($condiciones = null)
   {
     $sql = "
             select	producto.*, categoria.nombre_categoria, marca.nombre_marca from producto
@@ -29,10 +29,26 @@ class mProducto
             inner join marca
               on producto.marca_id=marca.id
           ";
+    if (isset($condiciones['campo'])) {
+      $sql .= " WHERE $condiciones[campo] $condiciones[operador] $condiciones[valor] ";
+    }
+    // echo $sql;
     $rsql = $this->select_msql($sql);
     return $rsql;
   }
-
+  function listarConFiltrado($condiciones)
+  {
+    $sql = "
+            select	producto.*, categoria.nombre_categoria, marca.nombre_marca from producto
+            inner join categoria
+              on producto.categoria_id=categoria.id
+            inner join marca
+              on producto.marca_id=marca.id
+            WHERE $condiciones[campo] $condiciones[operador] $condiciones[valor]
+          ";
+    $rsql = $this->select_msql($sql);
+    return $rsql;
+  }
   function select_msql($sql)
   {
     // echo $sql;

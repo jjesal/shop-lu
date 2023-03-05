@@ -22,7 +22,9 @@
                       <div class="card-body">
                         <div class="shop__sidebar__categories">
                           <ul class="nice-scroll">
-                            <li v-for="categoria in arrCategoria"><a href="#">{{ categoria.nombre }}</a></li>
+                            <li v-for="categoria in arrCategoria"><a @click="listarPorCategoria(categoria.id)" href="#">{{
+                              categoria.nombre }}</a></li>
+                            <li><a @click="listProducts()" href="#">Todas</a></li>
                           </ul>
                         </div>
                       </div>
@@ -36,49 +38,14 @@
                       <div class="card-body">
                         <div class="shop__sidebar__brand">
                           <ul>
-                            <li v-for="marca in arrMarca"><a href="#">{{ marca.nombre }}</a></li>
+                            <li v-for="marca in arrMarca"><a @click="listarPorMarca(marca.id)" href="#">{{ marca.nombre
+                            }}</a></li>
+                            <li><a @click="listProducts()" href="#">Todas</a></li>
                           </ul>
                         </div>
                       </div>
                     </div>
                   </div>
-                  <!-- <div class="card">
-                    <div class="card-heading">
-                      <a data-toggle="collapse" data-target="#collapseThree">FILTRAR PRECIO</a>
-                    </div>
-                    <div id="collapseThree" class="collapse show" data-parent="#accordionExample">
-                      <div class="card-body">
-                        <div class="shop__sidebar__price">
-                          <ul>
-                            <li><a href="#">S/. 0.00 - S/. 50.00</a></li>
-                            <li><a href="#">S/. 50.00 - S/. 100.00</a></li>
-                            <li><a href="#">S/. 100.00 - S/. 150.00</a></li>
-                            <li><a href="#">S/. 150.00 - S/. 200.00</a></li>
-                            <li><a href="#">S/. 200.00 - S/. 250.00</a></li>
-                            <li><a href="#">250.00+</a></li>
-                          </ul>
-                        </div>
-                      </div>
-                    </div>
-                  </div> -->
-                  <!-- <div class="card">
-                        <div class="card-heading">
-                          <a data-toggle="collapse" data-target="#collapseSix">Tags</a>
-                        </div>
-                        <div id="collapseSix" class="collapse show" data-parent="#accordionExample">
-                          <div class="card-body">
-                            <div class="shop__sidebar__tags">
-                              <a href="#">Product</a>
-                              <a href="#">Bags</a>
-                              <a href="#">Shoes</a>
-                              <a href="#">Fashio</a>
-                              <a href="#">Clothing</a>
-                              <a href="#">Hats</a>
-                              <a href="#">Accessories</a>
-                            </div>
-                          </div>
-                        </div>
-                      </div> -->
                 </div>
               </div>
             </div>
@@ -110,25 +77,11 @@
                   </div>
                   <div class="product__item__text">
                     <h6>{{ producto.nombre_producto }} - <i>{{ producto.nombre_marca }}</i></h6>
-                    <a href="#" @click="addProductToCart(producto)" class="add-cart">+ Añadir al carrito</a>
-
                     <h5>S/. {{ parseFloat(producto.precio).toFixed(2) }}</h5>
-
                   </div>
                 </div>
               </div>
             </div>
-            <!-- <div class="row">
-              <div class="col-lg-12">
-                <div class="product__pagination">
-                  <a class="active" href="#">1</a>
-                  <a href="#">2</a>
-                  <a href="#">3</a>
-                  <span>...</span>
-                  <a href="#">21</a>
-                </div>
-              </div>
-            </div> -->
           </div>
         </div>
       </div>
@@ -171,13 +124,16 @@ export default {
     return {
       arrProducts: [],
       arrCategoria: [],
-      arrMarca: []
+      arrMarca: [],
+      operadorFiltrado: '=',
+      operadorBusqueda: 'LIKE',
+      campoCategoria: 'categoria.id',
+      campoMarca: 'marca.id',
+      campoBusqueda: 'producto.nombre_producto'
     };
   },
   created: function () {
-    this.$root.getData('listarProducto').then(arrProducts => {
-      this.arrProducts = arrProducts;
-    });
+    this.listProducts();
     this.$root.getData('listarCategoria').then(arrCategoria => {
       this.arrCategoria = arrCategoria;
     });
@@ -204,8 +160,29 @@ export default {
         title: 'Producto agregado',
         showConfirmButton: false,
         timer: 750,
-          // iconColor: 'rgb(234 53 84 / 39%)'
+        // iconColor: 'rgb(234 53 84 / 39%)'
       })
+    },
+    listarPorCategoria(id) {
+      const condiciones = {
+        campo: this.campoCategoria,
+        operador: this.operadorFiltrado,
+        valor: id
+      };
+      this.listProducts(condiciones);
+    },
+    listarPorMarca(id) {
+      const condiciones = {
+        campo: this.campoMarca,
+        operador: this.operadorFiltrado,
+        valor: id
+      };
+      this.listProducts(condiciones);
+    },
+    listProducts(condiciones = {}) {
+      this.$root.postData('listarProducto', condiciones).then(arrProducts => {
+        this.arrProducts = arrProducts;
+      });
     }
   }
 }

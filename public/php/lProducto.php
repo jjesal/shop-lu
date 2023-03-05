@@ -24,9 +24,11 @@ function getImage()
 function listarProducto()
 {
     global $serverResponse;
+    global $axios_data;
     $registros = array();
     $funciones = new mProducto();
-    $result = $funciones->listar();
+    $condiciones = $axios_data;
+    $result = $funciones->listar($condiciones);
     while ($fila = mysqli_fetch_assoc($result)) {
         $fila["imagen"] = base64_encode($fila["imagen"]);
         $registros[] = $fila;
