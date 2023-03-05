@@ -4,9 +4,9 @@ INSERT INTO `acceso` (`id`, `nombre_acceso`) VALUES (NULL, 'editar_usuarios');
 INSERT INTO `acceso` (`id`, `nombre_acceso`) VALUES (NULL, 'comprar');
 INSERT INTO `acceso` (`id`, `nombre_acceso`) VALUES (NULL, 'reportes');
 INSERT INTO `acceso` (`id`, `nombre_acceso`) VALUES (NULL, 'ejecutar_orden');
-INSERT INTO `rol` (`id`, `nombre_rol`) VALUES (NULL, 'administrador');
-INSERT INTO `rol` (`id`, `nombre_rol`) VALUES (NULL, 'vendedor');
-INSERT INTO `rol` (`id`, `nombre_rol`) VALUES (NULL, 'cliente');
+INSERT INTO `rol` (`id`, `nombre_rol`) VALUES (NULL, 'Administrador');
+INSERT INTO `rol` (`id`, `nombre_rol`) VALUES (NULL, 'Vendedor');
+INSERT INTO `rol` (`id`, `nombre_rol`) VALUES (NULL, 'Cliente');
 ##ROL ADMIN
 INSERT INTO `rol_has_acceso` (`rol_id`, `acceso_id`) VALUES (1, 1);
 INSERT INTO `rol_has_acceso` (`rol_id`, `acceso_id`) VALUES (1, 2);
@@ -28,7 +28,7 @@ direccion)VALUES(NULL,
 'admin@gmail.com',
 '000000000',
 '00000000',
-'admin',
+'daralu',
 '##');
 ##ROL CLIENTE
 INSERT INTO `rol_has_acceso` (`rol_id`, `acceso_id`) VALUES (3, 3);

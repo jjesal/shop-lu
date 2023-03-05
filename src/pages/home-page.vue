@@ -20,16 +20,30 @@
                     <li id="menu-carrito" @click="manageActive($event)"><a
                         v-on:click="() => { view.page = 'car-page'; view.title = 'Carrito' }">Carrito</a></li>
                     <!-- <li><a >xx</a></li> -->
-                    <li v-if="$root.userLogged.rol_id===1" id="dropmenu"><a>Mantenimiento</a>
+                    <li v-if="$root.userLogged.rol_id === 1" id="dropmenu"><a>Mantenimiento</a>
                       <ul class="dropdown">
                         <li @click="manageActive($event, 'dropmenu')"><a
                             v-on:click="() => { view.page = 'register-category'; view.title = 'Categorías' }"
                             href="#">Categorías</a></li>
                         <li @click="manageActive($event, 'dropmenu')"><a
-                            v-on:click="() => { view.page = 'register-mark'; view.title = 'Marcas' }" href="#">Marcas</a></li>
+                            v-on:click="() => { view.page = 'register-mark'; view.title = 'Marcas' }" href="#">Marcas</a>
+                        </li>
                         <li @click="manageActive($event, 'dropmenu')"><a
                             v-on:click="() => { view.page = 'register-products'; view.title = 'Registrar producto' }"
                             href="#">Registrar producto</a></li>
+                        <li @click="manageActive($event, 'dropmenu')"><a
+                            v-on:click="() => { view.page = 'list-orders'; view.title = 'Órdenes de venta' }"
+                            href="#">Órdenes de venta</a></li>
+                        <li @click="manageActive($event, 'dropmenu')"><a
+                            v-on:click="() => { view.page = 'manage-persons'; view.title = 'Usuarios' }"
+                            href="#">Usuarios</a></li>
+                      </ul>
+                    </li>
+                    <li v-if="$root.userLogged.rol_id === 2" id="dropmenu"><a>Mantenimiento</a>
+                      <ul class="dropdown">
+                        <li @click="manageActive($event, 'dropmenu')"><a
+                            v-on:click="() => { view.page = 'list-orders'; view.title = 'Órdenes de venta' }"
+                            href="#">Órdenes de venta</a></li>
                       </ul>
                     </li>
                   </ul>
@@ -107,11 +121,13 @@ a {
 </style>
 <script>
 import MainLayout from '../layouts/main-layout.vue'
+import listOrders from '../pages/list-orders.vue'
 import listProducts from '../pages/list-products.vue'
 import registerProducts from '../pages/register-products.vue'
 import registerCategory from '../pages/register-category.vue'
 import registerMark from '../pages/register-mark.vue'
 import carPage from '../pages/car-page.vue'
+import managePersons from '../pages/manage-persons.vue'
 import spinnerVeil from "../components/spinner-veil.vue"
 import swal from 'sweetalert2';
 
@@ -119,12 +135,14 @@ export default {
   components: {
     MainLayout,
     listProducts,
+    listOrders,
     registerProducts,
     registerCategory,
     registerMark,
     carPage,
     spinnerVeil,
-    swal
+    swal,
+    managePersons
   },
   data: () => {
     return {

@@ -60,6 +60,11 @@ getAxiosData();
 isLoggedIn();
 if ($serverResponse['connected'] === true) {
   switch ($op) {
+    case 'listarRol': {
+        listarRol();
+        $typeData = 1;
+        break;
+      }
     case 'listarProducto': {
         listarProducto();
         $typeData = 1;
@@ -70,7 +75,7 @@ if ($serverResponse['connected'] === true) {
         $typeData = 1;
         break;
       }
-      case 'insertarOrden': {
+    case 'insertarOrden': {
         insertarOrden();
         $typeData = 1;
         break;
@@ -95,6 +100,16 @@ if ($serverResponse['connected'] === true) {
         $typeData = 1;
         break;
       }
+    case 'listarPersona': {
+        listarPersona();
+        $typeData = 1;
+        break;
+      }
+    case 'listarOrden': {
+        listarOrden();
+        $typeData = 1;
+        break;
+      }
     case 'eliminarPersonal': {
         eliminarPersonal();
         break;
@@ -103,11 +118,27 @@ if ($serverResponse['connected'] === true) {
         cerrarSesion();
         break;
       }
+    case 'insertarPersonal': {
+        insertarPersonal();
+        $typeData = 1;
+        break;
+      }
+    case 'comprobarUsuario': {
+        comprobarUsuario();
+        isLoggedIn();
+        break;
+      }
+    case 'actualizarEstado': {
+        actualizarEstado();
+        isLoggedIn();
+        break;
+      }
     default:
       break;
   }
 } else {
   switch ($op) {
+
     case 'insertarPersonal': {
         insertarPersonal();
         $typeData = 1;

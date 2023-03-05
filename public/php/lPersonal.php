@@ -6,16 +6,28 @@ function insertarPersonal()
     if (isset($axios_data['persona'])) {
         $persona = $axios_data['persona'];
         $funciones->insertar($persona,);
-        listarPersonal();
+        listarPersona();
     }
 }
 
-function listarPersonal()
+function listarPersona()
 {
     global $serverResponse;
     $registros = array();
     $funciones = new mPersonal();
     $result = $funciones->listar();
+    while ($fila = mysqli_fetch_assoc($result)) {
+        $registros[] = $fila;
+    }
+    return $serverResponse = $registros;
+}
+
+function listarRol()
+{
+    global $serverResponse;
+    $registros = array();
+    $funciones = new mPersonal();
+    $result = $funciones->listarRol();
     while ($fila = mysqli_fetch_assoc($result)) {
         $registros[] = $fila;
     }
@@ -28,5 +40,4 @@ function eliminarPersonal()
     $funciones = new mPersonal();
     $id_personal = $axios_data['id_personal'];
     $funciones->eliminar($id_personal);
-    listarPersonal();
 }

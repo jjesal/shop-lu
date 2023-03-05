@@ -4,5 +4,6 @@ export default {
   '/login': 'login-page',
   '/register': 'register-page',
   '/register-products': 'register-products',
-  '/cart': 'cart-page'
+  '/cart': 'cart-page',
+  '/manage-users': 'manage-persons',
 }

@@ -52,7 +52,7 @@ input {
   border: 1px solid;
   color: var(--my-btn-color);
   border-radius: 20px;
-  height: 35px;
+  min-height: 35px;
   padding: 5px 10px;
   line-height: 1;
   background-color: transparent;
@@ -62,7 +62,10 @@ input {
 .my-btn:hover {
   background-color: var(--my-btn-color);
   color: var(--my-text-color);
-  font-weight: 600;
+}
+
+.my-btn:disabled {
+  color: gray;
 }
 
 .my-link {

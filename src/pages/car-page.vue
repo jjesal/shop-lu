@@ -83,10 +83,11 @@ export default {
             producto_id: '',
             precio: 0
           }
-        ]
+        ],
+        estado: 'Nuevo'
       },
       showSummary: false,
-      codigoOrden: '#00000'
+      codigoOrden: ''
     };
   },
   computed: {
@@ -110,7 +111,7 @@ export default {
 
       this.$root.postData('insertarOrden', this.ordenCompra)
         .then((rs) => {
-          this.codigoOrden += rs;
+          this.codigoOrden = rs;
           this.showSummary = true;
           this.$root.userCart = [];
         })

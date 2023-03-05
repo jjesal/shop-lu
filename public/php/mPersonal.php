@@ -23,7 +23,17 @@ class mPersonal
   function listar()
   {
     $sql = "
-            select	* from persona
+            select	CONCAT(nombres , ', ' , apellidos) AS nombre, dni, celular, correo, direccion, rol.nombre_rol  from persona
+            inner join rol on persona.rol_id=rol.id
+          ";
+    $rsql = $this->select_msql($sql);
+    return $rsql;
+  }
+
+  function listarRol()
+  {
+    $sql = "
+            select	* from rol
           ";
     $rsql = $this->select_msql($sql);
     return $rsql;
