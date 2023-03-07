@@ -82,8 +82,8 @@ class mOrden
   {
     // echo $sql;
     $cnx = cnx();
-    $rsql = mysqli_query($cnx, $sql);
     try {
+      $rsql = mysqli_query($cnx, $sql);
       if ($returnId) {
         // printf("Nuevo registro con el id %d.\n", $cnx->insert_id);
         return  $cnx->insert_id;

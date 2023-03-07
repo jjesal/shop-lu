@@ -33,10 +33,11 @@ class mCategoria
   {
     // echo $sql;
     $cnx = cnx();
-    $rsql = mysqli_query($cnx, $sql);
     try {
+      $rsql = mysqli_query($cnx, $sql);
       return $rsql;
     } catch (Exception $e) {
+      var_dump($e);
       return null;
     }
   }
