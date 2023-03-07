@@ -85,4 +85,29 @@ input {
 .swal-button:not([disabled]):hover {
   background-color: rgba(234, 53, 83, 0.524);
 }
+
+@media screen and (min-width: 992px) and (max-width: 1199px) {
+
+  /* Estilos para pantallas de 992px a 1199px */
+  * {
+    font-size: calc(100% + 0.5px) !important;
+  }
+
+}
+
+@media screen and (min-width: 768px) and (max-width: 991px) {
+
+  /* Estilos para pantallas de 768px a 991px */
+  * {
+    font-size: calc(100% + 0.5px) !important;
+  }
+}
+
+@media screen and (max-width: 767px) {
+
+  /* Estilos para pantallas de 767px o menos */
+  * {
+    font-size: calc(100% + 0.5px) !important;
+  }
+}
 </style>
